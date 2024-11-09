@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página De Contato Com Validação</title>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color:red;"> Formulário de Contato</h1>
+        <form id="contactForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="3" required></textarea>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <script>
+      function validateForm() {
+    // Limpa a mensagem anterior
+    document.getElementById("feedback").innerHTML = "";
+
+    // Obtendo os valores dos campos
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    // Verifica se os campos estão preenchidos
+    if (!name || !email || !message) {
+        showFeedback("Por favor, preencha todos os campos.", "error");
+        return false;
+    }
+
+    // Validação do formato do email
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailPattern.test(email)) {
+        showFeedback("Por favor, insira um email válido.", "error");
+        return false;
+    }
+
+    // Se passar em todas as validações
+    showFeedback("Mensagem enviada com sucesso!", "sucesso");
+    return true;  // O formulário pode ser enviado
+}
+
+// Função para exibir feedback de sucesso ou erro
+function showFeedback(message, type) {
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.textContent = message;
+    feedbackElement.className = 'feedback ' + type;
+}
+    </script>
+</body>
+</html>
